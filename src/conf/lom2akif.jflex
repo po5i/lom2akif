@@ -20,9 +20,10 @@ import net.zettadata.generator.tools.ToolboxException;
     private JSONObject jObject ;
     private JSONObject jObject2 ;
     private JSONArray jArray ;
-    private StringBuilder tmp ;
+    private StringBuilder tmp ;   
     private String language ;
     private String source ;
+    private String potentialLangs ;
     private JSONObject expression ;
     private JSONObject manifestation ;
     private JSONObject item ;
@@ -36,6 +37,12 @@ import net.zettadata.generator.tools.ToolboxException;
     
 	public JSONObject getAkif() {
 		return akif;
+	}
+
+        @SuppressWarnings("unchecked")
+	public void setPotentialLangs(String langs)
+	{
+		potentialLangs = langs;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -352,7 +359,7 @@ import net.zettadata.generator.tools.ToolboxException;
 	"<string>"
 	{
 		// if language is missing, use English as default
-		language = "en" ;
+		language = "en" ;               
 		yybegin( RDESCRIPTIONSTRING ) ;
 	}
 	
@@ -745,6 +752,13 @@ import net.zettadata.generator.tools.ToolboxException;
 	{
 		yybegin( KEYWORDLANGUAGE ) ;
 	}
+
+        "<string>"
+	{
+		// if lang string is missing, use the result of lang detection
+		tmp = new StringBuilder() ;                            
+		yybegin( KEYWORDSTRING ) ;        
+	}
 	
 	"</keyword>"
 	{
@@ -777,7 +791,19 @@ import net.zettadata.generator.tools.ToolboxException;
 <KEYWORDSTRING>
 {
 	"</string>"
-	{
+	{       
+                
+                 if (language == null){
+                    try
+                    {
+                            language = Toolbox.getInstance().detectLanguage( tmp.toString().trim(), "en, fr, el" ) ;
+                    }
+                    catch( ToolboxException te )
+                    {
+                            System.out.println( te.getMessage() ) ;
+                    }
+                }
+
 		if ( ((JSONObject)akif.get( "languageBlocks" )).containsKey( language ) )
 		{
 			if (((JSONObject)((JSONObject)akif.get( "languageBlocks" )).get( language )).containsKey( "keywords" ) )
@@ -881,7 +907,15 @@ import net.zettadata.generator.tools.ToolboxException;
 	{
 		yybegin( DESCRIPTIONLANGUAGE ) ;
 	}
-	
+
+        "<string>"
+	{
+		// if lang string is missing, use the result of lang detection
+		tmp = new StringBuilder() ;                            
+		yybegin( DESCRIPTIONSTRING ) ;
+        
+	}
+       	
 	"</description>"
 	{
 		yybegin( GENERAL ) ;
@@ -913,13 +947,25 @@ import net.zettadata.generator.tools.ToolboxException;
 <DESCRIPTIONSTRING>
 {
 	"</string>"
-	{
+	{       
+               if (language == null){
+                    try
+                    {
+                            language = Toolbox.getInstance().detectLanguage( tmp.toString().trim() ) ;
+                    }
+                    catch( ToolboxException te )
+                    {
+                            System.err.println( te.getMessage() ) ;
+                    }
+                }
+
+                
 		if ( ((JSONObject)akif.get( "languageBlocks" )).containsKey( language ) )
 		{
 			((JSONObject)((JSONObject)akif.get( "languageBlocks" )).get( language )).put("description", tmp.toString()) ;
 		}
 		else
-		{
+		{                                         
 			jObject = new JSONObject() ;
 			jObject.put( "description", tmp.toString() ) ;
 			((JSONObject)akif.get( "languageBlocks" )).put( language, jObject ) ;
@@ -973,7 +1019,18 @@ import net.zettadata.generator.tools.ToolboxException;
 <TITLESTRING>
 {
 	"</string>"
-	{
+	{       
+                 if (language == null){
+                    try
+                    {
+                            language = Toolbox.getInstance().detectLanguage( tmp.toString().trim() ) ;
+                    }
+                    catch( ToolboxException te )
+                    {
+                            System.err.println( te.getMessage() ) ;
+                    }
+                }
+        
 		if ( ((JSONObject)akif.get( "languageBlocks" )).containsKey( language ) )
 		{
 			((JSONObject)((JSONObject)akif.get( "languageBlocks" )).get( language )).put("title", tmp.toString()) ;

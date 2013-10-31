@@ -18,13 +18,14 @@ public class Main
 	{
 		if ( args.length != 4 )
 		{
-			System.err.println( "Usage : java -jar lom2akif.jar <INPUT_FOLDER> <OUTPUT_FOLDER> <BAD_FOLDER> <SET_NAME>" ) ;
+			System.err.println( "Usage : java -jar lom2akif.jar <INPUT_FOLDER> <OUTPUT_FOLDER> <BAD_FOLDER> <SET_NAME> <POT_LANGS>" ) ;
 			System.exit( -1 ) ;
 		}
 		String inputFolder = args[0] ;
 		String outputFolder = args[1] ;
 		String badFolder = args[2] ;
 		String set = args[3] ;
+                String potentialLangs = args[4];
 				
 		LOM2AKIF transformer = null ;
 		int identifier = 0 ;
@@ -43,6 +44,8 @@ public class Main
 				transformer.init() ;
 				transformer.setId( identifier ) ;
 				transformer.setSet( set ) ;
+                                transformer.setPotentialLangs (potentialLangs);
+                                
 				transformer.yylex() ;
 				FileUtils.writeStringToFile( new File( outputFolder + File.separator +identifier + ".json" ) , transformer.toString() ) ;
 			}
