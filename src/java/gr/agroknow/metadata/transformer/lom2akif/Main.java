@@ -16,7 +16,7 @@ public class Main
 	
 	public static void main(String[] args) throws IOException
 	{
-		if ( args.length != 4 )
+		if ( args.length != 5 )
 		{
 			System.err.println( "Usage : java -jar lom2akif.jar <INPUT_FOLDER> <OUTPUT_FOLDER> <BAD_FOLDER> <SET_NAME> <POT_LANGS>" ) ;
 			System.exit( -1 ) ;
