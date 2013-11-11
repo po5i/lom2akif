@@ -16,16 +16,16 @@ public class Main
 	
 	public static void main(String[] args) throws IOException
 	{
-		if ( args.length != 5 )
+		if ( args.length != 4 )
 		{
-			System.err.println( "Usage : java -jar lom2akif.jar <INPUT_FOLDER> <OUTPUT_FOLDER> <BAD_FOLDER> <SET_NAME> <POT_LANGS>" ) ;
+			System.err.println( "Usage : java -jar lom2akif.jar <INPUT_FOLDER> <OUTPUT_FOLDER> <BAD_FOLDER> <SET_NAME>" ) ;
 			System.exit( -1 ) ;
 		}
 		String inputFolder = args[0] ;
 		String outputFolder = args[1] ;
 		String badFolder = args[2] ;
 		String set = args[3] ;
-                String potentialLangs = args[4];
+                String potentialLangs = "en,fr,el,de";
 				
 		LOM2AKIF transformer = null ;
 		int identifier = 0 ;
