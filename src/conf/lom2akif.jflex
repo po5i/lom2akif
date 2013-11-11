@@ -590,7 +590,7 @@ import net.zettadata.generator.tools.ToolboxException;
 	
 	"<value".+"</value>"
 	{
-		jArray.add( extract( yytext() ).trim() ) ;
+		jArray.add( extract( yytext() ).trim().toLowerCase() ) ;
 	}
 }
 
