@@ -753,7 +753,7 @@ import net.zettadata.generator.tools.ToolboxException;
 		yybegin( KEYWORDLANGUAGE ) ;
 	}
 
-        "<string>"
+	"<string>"
 	{
 		// if lang string is missing, use the result of lang detection
 		tmp = new StringBuilder() ;                            
@@ -908,7 +908,7 @@ import net.zettadata.generator.tools.ToolboxException;
 		yybegin( DESCRIPTIONLANGUAGE ) ;
 	}
 
-        "<string>"
+	"<string>"
 	{
 		// if lang string is missing, use the result of lang detection
 		tmp = new StringBuilder() ;                            
@@ -987,6 +987,14 @@ import net.zettadata.generator.tools.ToolboxException;
 		tmp = new StringBuilder() ;
 		yybegin( TITLELANGUAGE ) ;
 	}
+	
+	"<string>"
+        {
+                // if lang string is missing, use the result of lang detection
+                tmp = new StringBuilder() ;
+                yybegin( TITLESTRING ) ;
+        
+        }
 	
 	"</title>"
 	{
