@@ -668,7 +668,9 @@ import net.zettadata.generator.tools.ToolboxException;
 	{
 		item = new JSONObject() ;
 		item.put( "broken", new Boolean( false ) ) ;
-		item.put( "url", extract(  yytext() ).trim().replaceAll("&amp;", "&" ) ) ;
+		
+		item.put( "url", extract( yytext() ).trim().replaceAll("&amp;", "&" ).replaceAll("<!\\[CDATA\\[", "").replaceAll("\\]\\]>", "")) ;		
+		//<![CDATA[http://
 		if ( manifestation.containsKey( "items" ) )
 		{
 			((JSONArray)manifestation.get( "items" )).add( item ) ;
