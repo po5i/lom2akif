@@ -28,7 +28,8 @@ public class Main
                 String potentialLangs = "en,fr,el,de";
 				
 		LOM2AKIF transformer = null ;
-		int identifier = 0 ;
+		//int identifier = 0 ;
+		String identifier = "";
 		// File inputDirectory = new File( inputFolder + File.separator + set ) ;
 		File inputDirectory = new File( inputFolder ) ;
 		FileReader fr = null ;
@@ -37,7 +38,8 @@ public class Main
 		{
 			try
 			{
-				identifier = Integer.parseInt( lom.substring(0, lom.length()-4 ) ) ;
+				//identifier = Integer.parseInt( lom.substring(0, lom.length()-4 ) ) ;
+				identifier = lom.substring(0, lom.length()-4 ) ;
 				// fr = new FileReader( inputFolder + File.separator + set + File.separator + lom ) ;
 				fr = new FileReader( inputFolder + File.separator + lom ) ;
 				transformer = new LOM2AKIF( fr ) ;

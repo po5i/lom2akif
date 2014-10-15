@@ -732,9 +732,9 @@ class LOM2AKIF {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void setId(int id)
+	public void setId(String id)
 	{
-		akif.put("identifier", new Integer( id ) ) ;
+		akif.put("identifier",  id  ) ;
 	}
 	
 	@SuppressWarnings("unchecked")
